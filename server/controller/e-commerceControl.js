@@ -2,8 +2,6 @@
 const Category = require('../model/category');
 const products = require('../model/product');
 
-
-
 exports.categories = async (req,res)=>{
     try {
         const categories = await Category.find({});
