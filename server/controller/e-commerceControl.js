@@ -18,9 +18,10 @@ exports.products = async (req,res)=>{
     try {
         let categoryByName = req.params.categoryName;
         let n = req.query.top;
-        let categories = await products.find({"category": categoryByName}).limit(n);
+        let min = req.query.min;
+        let max = req.query.max;
+        let categories = await products.find({"category": categoryByName, "price": { $gt: min, $lt: max }}).limit(n);
         
-       
         res.send(categories);
     }catch (error) {
         res.status(500).send({message: error.message || "Error Occured"});
