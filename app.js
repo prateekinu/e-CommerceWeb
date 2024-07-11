@@ -15,7 +15,11 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/ECOMProducts');
 }
 
-let products = require('./model/product.js');
+// let categories = require("./model/category.js");
+// let cate = new categories({
+//   name: "Laptop"
+// });
+// cate.save();
 
 
 app.use(express.urlencoded({extended: true}));
