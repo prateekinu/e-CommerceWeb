@@ -1,19 +1,51 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const expressLayouts = require("express-ejs-layouts");
 
-const port = 8080 
+const port = 8080 ;
 
-app.set("view engine","ejs");
-app.set("views", path.join(__dirname, "views"));
-app.use(express.static(path.join(__dirname, "public")));
+const mongoose = require('mongoose');
+
+main().then(()=>{
+        console.log("Connection Successful");
+    }).catch((err) => console.log(err));
+
+
+async function main() {
+  await mongoose.connect('mongodb://127.0.0.1:27017/ECOMProducts');
+}
+
+let products = require('./model/product.js');
+
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(expressLayouts);
 
 
+
+const routes = require('./server/router/route.js');
+app.use('/', routes);
 
 app.listen(port, ()=>{
     console.log(`server is listening to port: ${port}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+// const initdata = require("./initData.js");
+
+// const initDB = async ()=>{
+//     await products.deleteMany({});
+//     await products.insertMany(initdata.data);
+//     console.log("Data was initialized!");
+// }
+
+// initDB();
